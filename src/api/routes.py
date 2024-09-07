@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
 from flask_jwt_extended import create_access_token, get_jwt_identity, get_jwt, jwt_required
-from api.models import db, User, TokenBlockedList, Psicologo
+from api.models import db, User, TokenBlockedList
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
@@ -69,7 +69,7 @@ def user_login():
         return jsonify({"msg": "Clave invalida"}), 401
     
     #4. Generar el token
-    
+    role= "user"
     token = create_access_token(identity=user.id, additional_claims={"role": role})
     return jsonify({"token":token}), 200
 
